@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    paths-ignore:
+      - "**.md"
+      - "**.template"
+    tags:
+      - "*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+      - run: npm install
+      - uses: FedericoCarboni/setup-ffmpeg@v2
+        if: runner.os == 'Linux'
+      - name: Create the settings file
+        if: runner.os == 'Linux'
+        run: |
+          echo '{"machine.Platform Settings.Android.Keystore.filename": "${{ github.workspace }}/ascx.keystore", "machine.Platform Settings.Android.Keystore.keystore_password": "${{ secrets.KEYSTORE_PASSWORD }}", "machine.Platform Settings.Android.Keystore.keystore_alias_password": "${{ secrets.KEYSTORE_PASSWORD }}", "machine.Platform Settings.Android.Keystore.alias": "${{ secrets.KEYSTORE_USERNAME }}"}' > local_settings.json
+      - name: Set Up Android tools (Linux only)
+        if: runner.os == 'Linux'
+        run: |
+          ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager \
+          --sdk_root=$ANDROID_SDK_ROOT \
+          "platform-tools"
+      - name: Checkout a demo project
+        uses: actions/checkout@v4
+        with:
+          repository: shichen85/igor_demo
+          token: ${{ secrets.REPO_TOKEN }}
+          lfs: true
+          path: igor_demo
+      - name: use Igor Setup
+        uses: bscotch/setup-igor@main
+        with:
+          access-key: ${{ secrets.ACCESS_KEY }}
+          target-yyp: ${{ github.workspace }}/igor_demo/igor_demo.yyp
+          local-settings-override-file: ${{ github.workspace }}/local_settings.json
+        id: igor
+      - name: Read settings-dir and echo the json content
+        run: |
+          echo "UserDir: ${{ steps.igor.outputs.settings-dir }}"
+          # Read the json content
+          cat ${{ steps.igor.outputs.settings-dir }}
+      - run: npm test
+        env:
+          YYP: ${{ github.workspace }}/igor_demo/igor_demo.yyp
+          USERDIR: ${{ steps.igor.outputs.user-dir }}
+          YYC: true

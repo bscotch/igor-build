@@ -1,0 +1,32 @@
+name: "Igor build"
+description: "Used in tandem with bscotch/igor-setup, this action allows you build GameMaker projects for different platforms."
+author: "bscotch"
+inputs:
+  user-dir:
+    description: "The output of bscotch/igor-setup where the license and settings files are set up."
+    required: true
+  yyp-path:
+    description: "The path to the yyp file of a GameMaker project."
+    required: true
+  platform:
+    description: "The export platform. Only support windows, android, and ios at the moment. Default is 'windows' for Windows runner, 'android' for Linux runner, and 'ios' for MacOS runner."
+  config:
+    description: "The configuration to build for. See https://manual.gamemaker.io/monthly/en/#t=Settings%2FConfigurations.htm"
+  yyc:
+    description: "Whehter to use YYC or not. See https://manual.gamemaker.io/monthly/en/#t=Settings%2FYoYo_Compiler.htm"
+    default: "true"
+  save-logs:
+    description: "Whether to save the compiler output to a log file."
+    default: "false"
+  name:
+    description: "Desired executable name with extension."
+outputs:
+  out-dir:
+    description: "The directory containing the export."
+  out-name:
+    description: "The name of the export file."
+  log-dir:
+    description: "The path to log file of Igor's output if `save-logs` is true."
+runs:
+  using: "node20"
+  main: "dist/index.js"
