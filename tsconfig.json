@@ -1,14 +1,5 @@
 {
-  "exclude": [
-    "node_modules",
-    "dist",
-    "bootstrapper",
-    "gm-sandbox",
-    "sandbox",
-    "runtimes",
-    "build",
-    "out"
-  ],
+  "include": ["src/**/*.ts"],
   "compilerOptions": {
     "target": "es2017",
     "module": "es2020",
