@@ -44,7 +44,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: bscotch/ganary
-          token: ${{ secrets.REPO_TOKEN }}
           lfs: true
           path: ganary
       - name: use Igor Setup
