@@ -45,12 +45,12 @@ jobs:
         with:
           repository: bscotch/ganary
           lfs: true
-          path: ganary
+          path: Ganary
       - name: use Igor Setup
         uses: bscotch/igor-setup@main
         with:
           access-key: ${{ secrets.ACCESS_KEY }}
-          target-yyp: ${{ github.workspace }}/Ganary/Ganary.yyp
+          target-yyp: ${{ github.workspace }}/Ganary/Ganary/Ganary.yyp
           local-settings-override-file: ${{ github.workspace }}/local_settings.json
         id: igor
       - name: Read settings-dir and echo the json content
@@ -60,6 +60,6 @@ jobs:
           cat ${{ steps.igor.outputs.settings-dir }}
       - run: npm test
         env:
-          YYP: ${{ github.workspace }}/Ganary/Ganary.yyp
+          YYP: ${{ github.workspace }}/Ganary/Ganary/Ganary.yyp
           USERDIR: ${{ steps.igor.outputs.user-dir }}
           YYC: true
