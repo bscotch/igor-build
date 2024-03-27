@@ -43,10 +43,10 @@ jobs:
       - name: Checkout a demo project
         uses: actions/checkout@v4
         with:
-          repository: shichen85/igor_demo
+          repository: bscotch/ganary
           token: ${{ secrets.REPO_TOKEN }}
           lfs: true
-          path: igor_demo
+          path: ganary
       - name: use Igor Setup
         uses: bscotch/setup-igor@main
         with:
