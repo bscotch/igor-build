@@ -48,7 +48,7 @@ jobs:
           lfs: true
           path: ganary
       - name: use Igor Setup
-        uses: bscotch/setup-igor@main
+        uses: bscotch/igor-setup@main
         with:
           access-key: ${{ secrets.ACCESS_KEY }}
           target-yyp: ${{ github.workspace }}/igor_demo/igor_demo.yyp
