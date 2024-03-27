@@ -1,6 +1,6 @@
 # igor-build
 
-Used in tandem with bscotch/igor-setup, this action allows you build GameMaker projects for different platforms.
+Used in tandem with [bscotch/igor-setup](https://github.com/bscotch/igor-setup), this action allows you build GameMaker projects for different platforms.
 
 ### Caveats
 
@@ -8,6 +8,7 @@ Used in tandem with bscotch/igor-setup, this action allows you build GameMaker p
   - Windows
   - Android
   - iOS (will only export an XCode project, which you can build with [Fastlane](https://docs.fastlane.tools/best-practices/continuous-integration/github/))
+- If you are using GitHub Hosted Runners and the build fails, check the [hardware resource specs](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources) and [installed software specs](https://github.com/actions/runner-images?tab=readme-ov-file#software-and-image-support) to make sure that the hosted runner has the right environment for your project
 
 ## Usage
 
@@ -32,16 +33,16 @@ Used in tandem with bscotch/igor-setup, this action allows you build GameMaker p
     # Optional. Default is 'Default'
     config:
 
-    # Whehter to use YYC or not. See https://manual.gamemaker.io/monthly/en/#t=Settings%2FYoYo_Compiler.htm
+    # Whether to use YYC or not. See https://manual.gamemaker.io/monthly/en/#t=Settings%2FYoYo_Compiler.htm
     # Optional. Default is 'true'
     yyc:
 
     # Desired executable name with extension
-    # Optional. Defaults to project's name and an inferred extension.
+    # Optional. Defaults to project's name and an inferred extension (demo.zip for Windows, demo.aab for Android, demo.xcodeproj for iOS).
     name:
 
-    # Whether to save the compiler output to a log file.
-    # Optional. Default is false.
+    # Whether to save the compiler output to a log file. Set to 'true' to enable.
+    # Optional. Default is 'false'.
     save-logs:
 ```
 
@@ -55,6 +56,4 @@ Used in tandem with bscotch/igor-setup, this action allows you build GameMaker p
 
 ## Examples
 
-### Upload an Individual File
-
-See <https://github.com/shichen85/igor_demo/blob/bdafd0c5b1e6a237cbe6eb3fd2c01791c3aa52ab/.github/workflows/ci.yml>
+See <https://github.com/bscotch/ganary/.github/workflows/ci.yml>

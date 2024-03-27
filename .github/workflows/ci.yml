@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: 20.x
       - run: npm install
-      - uses: FedericoCarboni/setup-ffmpeg@v2
+      - uses: FedericoCarboni/setup-ffmpeg@v3
         if: runner.os == 'Linux'
       - name: Create the settings file
         if: runner.os == 'Linux'
@@ -43,15 +43,14 @@ jobs:
       - name: Checkout a demo project
         uses: actions/checkout@v4
         with:
-          repository: shichen85/igor_demo
-          token: ${{ secrets.REPO_TOKEN }}
+          repository: bscotch/ganary
           lfs: true
-          path: igor_demo
+          path: Ganary
       - name: use Igor Setup
-        uses: bscotch/setup-igor@main
+        uses: bscotch/igor-setup@main
         with:
           access-key: ${{ secrets.ACCESS_KEY }}
-          target-yyp: ${{ github.workspace }}/igor_demo/igor_demo.yyp
+          target-yyp: ${{ github.workspace }}/Ganary/Ganary/Ganary.yyp
           local-settings-override-file: ${{ github.workspace }}/local_settings.json
         id: igor
       - name: Read settings-dir and echo the json content
@@ -61,6 +60,6 @@ jobs:
           cat ${{ steps.igor.outputs.settings-dir }}
       - run: npm test
         env:
-          YYP: ${{ github.workspace }}/igor_demo/igor_demo.yyp
+          YYP: ${{ github.workspace }}/Ganary/Ganary/Ganary.yyp
           USERDIR: ${{ steps.igor.outputs.user-dir }}
           YYC: true

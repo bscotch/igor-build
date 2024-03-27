@@ -70,7 +70,7 @@ describe("GMS Compile", async function () {
         }
         expect(
           fs.existsSync(outFileDir),
-          `Output file should be at: ${outFileDir}`
+          `Output file should be at: ${outFileDir}`,
         ).to.be.true;
       }
     });

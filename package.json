@@ -1,7 +1,7 @@
 {
   "name": "setup-igor",
   "author": "Shi Chen",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "main": "./build/index.js",
   "type": "module",
   "files": [
@@ -14,6 +14,7 @@
     "test:main": "npm run release && node -r dotenv/config ./dist/index.js",
     "test": "npm run build && mocha --enable-source-maps --bail ./build/test/",
     "build": "rimraf build && tsc && tsc-alias",
+    "preversion": "npm run release",
     "version": "npm run format && git add -A",
     "postversion": "git push --follow-tags",
     "format": "prettier src/**/*.ts -w",

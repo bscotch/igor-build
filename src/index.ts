@@ -11,7 +11,7 @@ export async function run() {
     let platform = core.getInput("platform");
     const config = core.getInput("config") || "Default";
     const yyc = core.getInput("yyc") === "true";
-    const save_logs = core.getInput("save-logs") === "false";
+    const save_logs = core.getInput("save-logs") !== "false";
     const name = core.getInput("name");
 
     if (!platform) {
@@ -36,7 +36,9 @@ export async function run() {
     const child = await compiler.build();
 
     if (save_logs) {
-      const logFile = path.resolve("igor_output.txt");
+      const logFile = path.resolve(
+        `${compiler.name}_${platform}_${config}_build.log`,
+      );
       fs.removeSync(logFile);
       const writeStream = fs.createWriteStream(logFile);
       child.stdout.pipe(writeStream);
