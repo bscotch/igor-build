@@ -34587,7 +34587,7 @@ async function run() {
         const compiler = new Gms2Compile(options);
         const child = await compiler.build();
         if (save_logs) {
-            const logFile = external_path_default().resolve("igor_output.txt");
+            const logFile = external_path_default().resolve(`${name}_${platform}_${config}_build.log`);
             lib_default().removeSync(logFile);
             const writeStream = lib_default().createWriteStream(logFile);
             child.stdout.pipe(writeStream);
