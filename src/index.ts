@@ -36,7 +36,7 @@ export async function run() {
     const child = await compiler.build();
 
     if (save_logs) {
-      const logFile = path.resolve("igor_output.log");
+      const logFile = path.resolve(`${name}_${platform}_${config}_build.log`);
       fs.removeSync(logFile);
       const writeStream = fs.createWriteStream(logFile);
       child.stdout.pipe(writeStream);
