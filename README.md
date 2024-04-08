@@ -57,4 +57,4 @@ Used in tandem with bscotch/igor-setup, this action allows you build GameMaker p
 
 ### Upload an Individual File
 
-See <https://github.com/bscotch/ganary/blob/bdafd0c5b1e6a237cbe6eb3fd2c01791c3aa52ab/.github/workflows/ci.yml>
+See <https://github.com/bscotch/ganary/.github/workflows/ci.yml>
