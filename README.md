@@ -40,8 +40,8 @@ Used in tandem with bscotch/igor-setup, this action allows you build GameMaker p
     # Optional. Defaults to project's name and an inferred extension.
     name:
 
-    # Whether to save the compiler output to a log file.
-    # Optional. Default is false.
+    # Whether to save the compiler output to a log file. Set to 'true' to enable.
+    # Optional. Default is 'false'.
     save-logs:
 ```
 
