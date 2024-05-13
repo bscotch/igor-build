@@ -56,4 +56,4 @@ Used in tandem with [bscotch/igor-setup](https://github.com/bscotch/igor-setup),
 
 ## Examples
 
-See <https://github.com/bscotch/ganary/.github/workflows/ci.yml>
+See <https://github.com/bscotch/ganary/blob/main/.github/workflows/ci.yml>
