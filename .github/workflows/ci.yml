@@ -29,6 +29,8 @@ jobs:
           node-version: 20.x
       - run: npm install
       - uses: FedericoCarboni/setup-ffmpeg@v3
+        with:
+          ffmpeg-version: "6.1.0"
         if: runner.os == 'Linux'
       - name: Create the settings file
         if: runner.os == 'Linux'
