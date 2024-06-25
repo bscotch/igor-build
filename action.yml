@@ -27,6 +27,9 @@ outputs:
     description: "The name of the export file."
   log-dir:
     description: "The path to log file of Igor's output if `save-logs` is true."
+branding:
+  icon: 'award'
+  color: 'purple'
 runs:
   using: "node20"
   main: "dist/index.js"
