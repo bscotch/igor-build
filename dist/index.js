@@ -34416,7 +34416,7 @@ class Gms2Compile {
         const originalBaseName = this.baseName;
         //Convert originalBaseName to replace all space and hyphen with underscore
         const baseName = originalBaseName.replace(/[-\s]/g, "_");
-        return (0,external_path_.join)(buildTempDir, baseName, `baseName.xcodeproj`);
+        return (0,external_path_.join)(buildTempDir, baseName, `${baseName}.xcodeproj`);
     }
     androidGradleOutputDir() {
         const buildCacheDir = this.localSettings["machine.General Settings.Paths.IDE.AssetCacheFolder"];
