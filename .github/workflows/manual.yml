@@ -1,0 +1,78 @@
+name: Manual Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      runtime:
+        description: "Target runtime"
+        required: false
+        default: "2024.1100.0.662"
+      runner:
+        description: "Runner"
+        required: false
+        default: "ubuntu-latest"
+      platform:
+        description: "Platform"
+        required: false
+        default: "ios"
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ${{ inputs.runner }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+      - run: npm install
+      - uses: FedericoCarboni/setup-ffmpeg@v3
+        with:
+          ffmpeg-version: "6.1.0"
+        if: runner.os == 'Linux'
+      - name: Use JAVA_HOME_17_X64 for jdk_location
+        if: inputs.platform == 'android'
+        run: |
+          # Store $JAVA_HOME_17_X64 as a GitHub env variable
+          echo "JAVA_HOME_17_X64=$JAVA_HOME_17_X64" >> $GITHUB_ENV
+      - name: Create the settings file
+        if: inputs.platform == 'android'
+        run: |
+          echo '{"machine.Platform Settings.Android.Keystore.filename": "${{ github.workspace }}/ascx.keystore", "machine.Platform Settings.Android.Keystore.keystore_password": "${{ secrets.KEYSTORE_PASSWORD }}", "machine.Platform Settings.Android.Keystore.keystore_alias_password": "${{ secrets.KEYSTORE_PASSWORD }}", "machine.Platform Settings.Android.Keystore.alias": "${{ secrets.KEYSTORE_USERNAME }}" , "machine.Platform Settings.Android.Paths.jdk_location": "${{ env.JAVA_HOME_17_X64 }}" }' > local_settings.json
+      - name: Set Up Android tools (Linux only)
+        if: inputs.platform == 'android'
+        run: |
+          ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager \
+          --sdk_root=$ANDROID_SDK_ROOT \
+          "platform-tools"
+      - name: Checkout a demo project
+        uses: actions/checkout@v4
+        with:
+          repository: bscotch/ganary
+          lfs: true
+          path: Ganary
+      - name: use Igor Setup
+        uses: bscotch/igor-setup@develop
+        with:
+          access-key: ${{ secrets.ACCESS_KEY }}
+          target-yyp: ${{ github.workspace }}/Ganary/Ganary/Ganary.yyp
+          local-settings-override-file: ${{ github.workspace }}/local_settings.json
+          modules: ${{ inputs.platform }}
+          runtime-version: ${{ inputs.runtime }}
+        id: igor
+      - name: Read settings-dir and echo the json content
+        run: |
+          echo "UserDir: ${{ steps.igor.outputs.settings-dir }}"
+          # Read the json content
+          cat ${{ steps.igor.outputs.settings-dir }}
+      - run: npm test
+        env:
+          YYP: ${{ github.workspace }}/Ganary/Ganary/Ganary.yyp
+          USERDIR: ${{ steps.igor.outputs.user-dir }}
+          YYC: true
+          TARGETPLATFORMS: ${{ inputs.platform }}
+          TARGET_RUNTIME: ${{ inputs.runtime }}
