@@ -34624,7 +34624,8 @@ async function run() {
         core.setOutput("out-dir", outDir);
     }
     catch (err) {
-        core.setFailed(err.message);
+        core.error(err);
+        core.setFailed(err);
     }
 }
 // eslint-disable-next-line @typescript-eslint/no-floating-promises

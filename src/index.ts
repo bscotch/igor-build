@@ -37,7 +37,7 @@ export async function run() {
 
     if (save_logs) {
       const logFile = path.resolve(
-        `${compiler.name}_${platform}_${config}_build.log`
+        `${compiler.name}_${platform}_${config}_build.log`,
       );
       fs.removeSync(logFile);
       const writeStream = fs.createWriteStream(logFile);
