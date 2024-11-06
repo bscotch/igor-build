@@ -37,7 +37,7 @@ export async function run() {
 
     if (save_logs) {
       const logFile = path.resolve(
-        `${compiler.name}_${platform}_${config}_build.log`,
+        `${compiler.name}_${platform}_${config}_build.log`
       );
       fs.removeSync(logFile);
       const writeStream = fs.createWriteStream(logFile);
@@ -75,7 +75,8 @@ export async function run() {
     core.setOutput("out-name", outName);
     core.setOutput("out-dir", outDir);
   } catch (err) {
-    core.setFailed((err as Error).message);
+    core.error(err as Error);
+    core.setFailed(err as Error);
   }
 }
 
