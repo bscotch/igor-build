@@ -9,6 +9,7 @@ Used in tandem with [bscotch/igor-setup](https://github.com/bscotch/igor-setup),
   - Android
   - iOS (will only export an XCode project, which you can build with [Fastlane](https://docs.fastlane.tools/best-practices/continuous-integration/github/))
 - If you are using GitHub Hosted Runners and the build fails, check the [hardware resource specs](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources) and [installed software specs](https://github.com/actions/runner-images?tab=readme-ov-file#software-and-image-support) to make sure that the hosted runner has the right environment for your project
+- If you are getting errors like `System.IO.DirectoryNotFoundException: Could not find a part of the path '/home/runner/work/foo/foo/scripts/bar/bar.yy'.` on Ubuntu runners, make sure that the mentioned `.yy` file uses the same casing as it was specified in the `.yyp` file. For example, if the `.yyp` file show `bar.yy` in lower case, but the actual file is in upper case like `Bar.yy`, this error will occur.
 
 ## Usage
 
