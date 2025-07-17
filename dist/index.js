@@ -34343,7 +34343,7 @@ const external_process_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import
 
 class Gms2Compile {
     constructor(options) {
-        this.config = "default";
+        this.config = "Default";
         this.yyc = true;
         this.userDir = options.userDir;
         this.projectDir = options.projectDir;
@@ -34353,7 +34353,10 @@ class Gms2Compile {
         this.baseName = (0,external_path_.basename)(this.projectDir, (0,external_path_.extname)(this.projectDir)).replace(" ", "_");
         this.exportPlatform = options.exportPlatform;
         this.destinationDir = options.destinationDir || (0,external_path_.resolve)("out");
-        this.config = options.config || "default";
+        this.config = options.config || "Default";
+        if (this.config == "default") {
+            this.config = "Default"; // Normalize to GameMaker's default config name
+        }
         this.name =
             options.name ||
                 `${this.baseName}.${Gms2Compile.inferOutputExtension(this.exportPlatform)}`;
@@ -34386,8 +34389,6 @@ class Gms2Compile {
                 worker = "Linux";
                 break;
             case "xboxone":
-                worker = "XboxOne";
-                break;
             case "xboxseriesxs":
                 worker = "XboxSeriesXS";
                 break;
@@ -34437,6 +34438,12 @@ class Gms2Compile {
         switch (platform) {
             case "windows":
                 command = "PackageZip";
+                break;
+            case "xboxone":
+                command = "PackageSubmissionXboxOne";
+                break;
+            case "xboxseriesxs":
+                command = "PackageSubmissionXboxSeriesXS";
                 break;
         }
         return {
