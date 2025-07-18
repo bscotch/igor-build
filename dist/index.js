@@ -34535,6 +34535,7 @@ class Gms2Compile {
         return (0,external_child_process_.spawn)(cmd.baseCommand, cmd.args, {
             cwd: cmd.destDir,
             env: childEnv,
+            shell: (0,external_os_.platform)() == "win32" ? "cmd.exe" : false,
         });
     }
     async build(envs = {}) {
