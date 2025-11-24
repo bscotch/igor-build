@@ -328,6 +328,7 @@ export class Gms2Compile {
     return spawn(cmd.baseCommand, cmd.args, {
       cwd: cmd.destDir,
       env: childEnv,
+      shell: platform() == "win32" ? "cmd.exe" : false,
     });
   }
 
