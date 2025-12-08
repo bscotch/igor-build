@@ -23,7 +23,7 @@ if (process.env.TARGETPLATFORMS) {
 } else {
   platforms = ["windows"];
   if (os.type() == "Darwin") {
-    platforms = ["ios"];
+    platforms = ["ios", "mac"];
   } else if (os.type() == "Linux") {
     platforms = ["android"];
   }
@@ -70,7 +70,7 @@ describe("GMS Compile", async function () {
         }
         expect(
           fs.existsSync(outFileDir),
-          `Output file should be at: ${outFileDir}`,
+          `Output file should be at: ${outFileDir}`
         ).to.be.true;
       }
     });
