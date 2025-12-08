@@ -35486,6 +35486,7 @@ class Gms2Compile {
         let command = "Package";
         switch (platform) {
             case "windows":
+            case "mac":
                 command = "PackageZip";
                 break;
             case "xboxone":
