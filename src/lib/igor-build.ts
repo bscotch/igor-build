@@ -291,14 +291,16 @@ export class Gms2Compile {
       fs.writeJSONSync(targetOptionsFn, targetOptions);
       args.push(`/targetOptions=${targetOptionsFn}`);
 
+      const baseName = this.baseName.replace(/[-\s]/g, "_");
       const xcUserDir = join(
         homedir(),
         "GM_MAC",
-        this.baseName,
-        this.baseName,
-        `${this.baseName}.xcodeproj`,
+        baseName,
+        baseName,
+        `${baseName}.xcodeproj`,
         "xcuserdata",
       );
+      console.log("Making path", xcUserDir);
       fs.ensureDirSync(xcUserDir);
     }
 
