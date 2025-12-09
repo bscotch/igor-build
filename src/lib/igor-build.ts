@@ -290,6 +290,17 @@ export class Gms2Compile {
       fs.ensureFileSync(targetOptionsFn);
       fs.writeJSONSync(targetOptionsFn, targetOptions);
       args.push(`/targetOptions=${targetOptionsFn}`);
+
+      const xcName = this.name.replace(" ", "_");
+      const xcUserDir = join(
+        homedir(),
+        "GM_MAC",
+        xcName,
+        xcName,
+        `${xcName}.xcodeproj`,
+        "xcuserdata",
+      );
+      fs.ensureDirSync(xcUserDir);
     }
 
     args.push("--", igorCommand.worker, igorCommand.command);
