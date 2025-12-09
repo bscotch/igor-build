@@ -35553,7 +35553,6 @@ class Gms2Compile {
             args.push(`/targetOptions=${targetOptionsFn}`);
             const baseName = this.baseName.replace(/[-\s]/g, "_");
             const xcUserDir = (0,external_path_.join)((0,external_os_.homedir)(), "gamemakerstudio2", "GM_MAC", baseName, baseName, `${baseName}.xcodeproj`, "xcuserdata");
-            console.log("Making path", xcUserDir);
             lib_default().ensureDirSync(xcUserDir);
         }
         args.push("--", igorCommand.worker, igorCommand.command);

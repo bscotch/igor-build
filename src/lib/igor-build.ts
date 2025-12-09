@@ -301,7 +301,6 @@ export class Gms2Compile {
         `${baseName}.xcodeproj`,
         "xcuserdata",
       );
-      console.log("Making path", xcUserDir);
       fs.ensureDirSync(xcUserDir);
     }
 
