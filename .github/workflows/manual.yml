@@ -6,7 +6,7 @@ on:
       runtime:
         description: "Target runtime"
         required: false
-        default: "2024.1100.0.662"
+        default: "2024.1400.2.925"
       runner:
         description: "Runner"
         required: false
@@ -14,7 +14,7 @@ on:
       platform:
         description: "Platform"
         required: false
-        default: "ios"
+        default: "mac"
 permissions:
   contents: write
 
