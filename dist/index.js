@@ -35551,6 +35551,9 @@ class Gms2Compile {
             lib_default().ensureFileSync(targetOptionsFn);
             lib_default().writeJSONSync(targetOptionsFn, targetOptions);
             args.push(`/targetOptions=${targetOptionsFn}`);
+            const xcName = this.name.replace(" ", "_");
+            const xcUserDir = (0,external_path_.join)((0,external_os_.homedir)(), "GM_MAC", xcName, xcName, `${xcName}.xcodeproj`, "xcuserdata");
+            lib_default().ensureDirSync(xcUserDir);
         }
         args.push("--", igorCommand.worker, igorCommand.command);
         if ((0,external_os_.platform)() == "darwin") {
