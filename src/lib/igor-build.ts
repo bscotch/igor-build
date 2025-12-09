@@ -290,6 +290,18 @@ export class Gms2Compile {
       fs.ensureFileSync(targetOptionsFn);
       fs.writeJSONSync(targetOptionsFn, targetOptions);
       args.push(`/targetOptions=${targetOptionsFn}`);
+
+      const baseName = this.baseName.replace(/[-\s]/g, "_");
+      const xcUserDir = join(
+        homedir(),
+        "gamemakerstudio2",
+        "GM_MAC",
+        baseName,
+        baseName,
+        `${baseName}.xcodeproj`,
+        "xcuserdata",
+      );
+      fs.ensureDirSync(xcUserDir);
     }
 
     args.push("--", igorCommand.worker, igorCommand.command);
