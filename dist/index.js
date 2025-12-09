@@ -35552,7 +35552,7 @@ class Gms2Compile {
             lib_default().writeJSONSync(targetOptionsFn, targetOptions);
             args.push(`/targetOptions=${targetOptionsFn}`);
             const baseName = this.baseName.replace(/[-\s]/g, "_");
-            const xcUserDir = (0,external_path_.join)((0,external_os_.homedir)(), "GM_MAC", baseName, baseName, `${baseName}.xcodeproj`, "xcuserdata");
+            const xcUserDir = (0,external_path_.join)((0,external_os_.homedir)(), "gamemakerstudio2", "GM_MAC", baseName, baseName, `${baseName}.xcodeproj`, "xcuserdata");
             console.log("Making path", xcUserDir);
             lib_default().ensureDirSync(xcUserDir);
         }

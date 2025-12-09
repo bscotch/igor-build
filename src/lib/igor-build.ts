@@ -294,6 +294,7 @@ export class Gms2Compile {
       const baseName = this.baseName.replace(/[-\s]/g, "_");
       const xcUserDir = join(
         homedir(),
+        "gamemakerstudio2",
         "GM_MAC",
         baseName,
         baseName,
