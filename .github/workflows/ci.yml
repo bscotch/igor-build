@@ -37,16 +37,30 @@ jobs:
         run: |
           # Store $JAVA_HOME_17_X64 as a GitHub env variable
           echo "JAVA_HOME_17_X64=$JAVA_HOME_17_X64" >> $GITHUB_ENV
+      - name: Setup emsdk
+        if: runner.os == 'Linux'
+        uses: mymindstorm/setup-emsdk@v14
+        id: emsdk
+        with:
+          # Make sure to set a version number!
+          version: 3.1.47
       - name: Create the settings file
         if: runner.os == 'Linux'
         run: |
-          echo '{"machine.Platform Settings.Android.Keystore.filename": "${{ github.workspace }}/ascx.keystore", "machine.Platform Settings.Android.Keystore.keystore_password": "${{ secrets.KEYSTORE_PASSWORD }}", "machine.Platform Settings.Android.Keystore.keystore_alias_password": "${{ secrets.KEYSTORE_PASSWORD }}", "machine.Platform Settings.Android.Keystore.alias": "${{ secrets.KEYSTORE_USERNAME }}" , "machine.Platform Settings.Android.Paths.jdk_location": "${{ env.JAVA_HOME_17_X64 }}" }' > local_settings.json
+          echo '{"machine.Platform Settings.Android.Keystore.filename": "${{ github.workspace }}/ascx.keystore", "machine.Platform Settings.Android.Keystore.keystore_password": "${{ secrets.KEYSTORE_PASSWORD }}", "machine.Platform Settings.Android.Keystore.keystore_alias_password": "${{ secrets.KEYSTORE_PASSWORD }}", "machine.Platform Settings.Android.Keystore.alias": "${{ secrets.KEYSTORE_USERNAME }}" , "machine.Platform Settings.Android.Paths.jdk_location": "${{ env.JAVA_HOME_17_X64 }}", "machine.Platform Settings.operagx.sdk_dir": "${{ env.EMSDK }}" }' > local_settings.json
+          echo "IGOR_MODULES=android,operagx" >> $GITHUB_ENV
       - name: Set Up Android tools (Linux only)
         if: runner.os == 'Linux'
         run: |
           ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager \
           --sdk_root=$ANDROID_SDK_ROOT \
           "platform-tools"
+      - name: Setup emsdk
+        if: runner.os == 'Linux'
+        uses: mymindstorm/setup-emsdk@v14
+        with:
+          # Make sure to set a version number!
+          version: 3.1.47
       - name: Checkout a demo project
         uses: actions/checkout@v4
         with:
@@ -59,6 +73,7 @@ jobs:
           access-key: ${{ secrets.ACCESS_KEY }}
           target-yyp: ${{ github.workspace }}/Ganary/Ganary/Ganary.yyp
           local-settings-override-file: ${{ github.workspace }}/local_settings.json
+          modules: ${{ env.IGOR_MODULES }}
         id: igor
       - name: Read settings-dir and echo the json content
         run: |

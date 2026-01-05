@@ -16,7 +16,8 @@ interface IgorCommands {
     | "iOS"
     | "XboxOne"
     | "WinUWP"
-    | "XboxSeriesXS";
+    | "XboxSeriesXS"
+    | "OperaGX";
   command:
     | "PackageZip"
     | "Package"
@@ -66,6 +67,11 @@ export interface Gms2CompileOptions {
    *
    */
   yyc?: boolean;
+  gxPackageType?:
+    | "OperaGXPackage_Zip"
+    | "OperaGXPackage_Gamestrip"
+    | "OperaGXPackage_Wallpaper"
+    | string;
 }
 
 export class Gms2Compile {
@@ -80,6 +86,11 @@ export class Gms2Compile {
   name: string;
   private yyc = true;
   private runtimePath: string;
+  private gxPackageType?:
+    | "OperaGXPackage_Zip"
+    | "OperaGXPackage_Gamestrip"
+    | "OperaGXPackage_Wallpaper"
+    | string;
 
   constructor(options: Gms2CompileOptions) {
     this.userDir = options.userDir;
@@ -89,7 +100,7 @@ export class Gms2Compile {
     }
     this.baseName = basename(this.projectDir, extname(this.projectDir)).replace(
       " ",
-      "_",
+      "_"
     );
     this.exportPlatform = options.exportPlatform;
     this.destinationDir = options.destinationDir || resolve("out");
@@ -102,9 +113,10 @@ export class Gms2Compile {
       `${this.baseName}.${Gms2Compile.inferOutputExtension(this.exportPlatform)}`;
 
     this.yyc = options.yyc;
+    this.gxPackageType = options.gxPackageType || "OperaGXPackage_Zip";
 
     this.localSettings = fs.readJSONSync(
-      join(this.userDir, "local_settings.json"),
+      join(this.userDir, "local_settings.json")
     );
 
     this.targetRuntime = this.localSettings["targetRuntime"];
@@ -112,7 +124,7 @@ export class Gms2Compile {
     this.runtimePath = //Infer the runtime path
       join(
         this.localSettings["runtimeDir"] as string,
-        `runtime-${this.targetRuntime}`,
+        `runtime-${this.targetRuntime}`
       );
   }
 
@@ -142,6 +154,9 @@ export class Gms2Compile {
       case "xboxseriesxs":
         worker = "XboxSeriesXS";
         break;
+      case "operagx":
+        worker = "OperaGX";
+        break;
       default:
         throw new Error(`${platform} is not supported!`);
     }
@@ -162,6 +177,7 @@ export class Gms2Compile {
         html5: "html",
         main: ".zip",
         xboxseriesxs: "xboxseriesxs-pkg",
+        operagx: "zip",
       }[platform] || ""
     );
   }
@@ -194,7 +210,7 @@ export class Gms2Compile {
 
   private _generateWorkerCommands(
     platform: ModuleAliases,
-    generatePublishBuild = false,
+    generatePublishBuild = false
   ) {
     const worker = this._convertToIgorWorker(platform);
 
@@ -245,7 +261,7 @@ export class Gms2Compile {
         baseCommand = join(
           this.runtimePath,
           `bin/igor/windows/${arch}`,
-          "Igor.exe",
+          "Igor.exe"
         );
       } else if (osPlatform() == "darwin") {
         baseCommand = join(this.runtimePath, `bin/igor/osx/${arch}`, "Igor");
@@ -268,17 +284,17 @@ export class Gms2Compile {
       `/cache=${buildCache}`,
       `/temp=${buildTempDir}`,
       `/of=${join(buildTempDir, this.baseName + ".win")}`,
-      `/tf=${this.name}`,
+      `/tf=${join(this.destinationDir, this.name)}`,
       `/config=${this.config}`,
       `/runtime=${buildOptimization}`,
       "/v",
       "/ic",
-      "/cr",
+      "/cr"
     );
 
     if (fs.existsSync(legacyIgor)) {
       args.push(
-        `/ssdk=${this.localSettings["machine.Platform Settings.Steam.steamsdk_path"]}`,
+        `/ssdk=${this.localSettings["machine.Platform Settings.Steam.steamsdk_path"]}`
       );
     }
     const igorCommand = this._generateWorkerCommands(this.exportPlatform);
@@ -299,9 +315,13 @@ export class Gms2Compile {
         baseName,
         baseName,
         `${baseName}.xcodeproj`,
-        "xcuserdata",
+        "xcuserdata"
       );
       fs.ensureDirSync(xcUserDir);
+    }
+
+    if (this.exportPlatform == "operagx") {
+      args.push(`/packagetype=${this.gxPackageType}`);
     }
 
     args.push("--", igorCommand.worker, igorCommand.command);

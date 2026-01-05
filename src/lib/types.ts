@@ -131,4 +131,5 @@ export type ModuleAliases =
   | "html5"
   | "main"
   | "xboxseriesxs"
+  | "operagx"
   | string;

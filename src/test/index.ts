@@ -23,9 +23,9 @@ if (process.env.TARGETPLATFORMS) {
 } else {
   platforms = ["windows"];
   if (os.type() == "Darwin") {
-    platforms = ["ios", "mac"];
+    platforms = ["ios"];
   } else if (os.type() == "Linux") {
-    platforms = ["android"];
+    platforms = ["android", "operagx"];
   }
 }
 

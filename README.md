@@ -45,6 +45,10 @@ Used in tandem with [bscotch/igor-setup](https://github.com/bscotch/igor-setup),
     # Whether to save the compiler output to a log file. Set to 'true' to enable.
     # Optional. Default is 'false'.
     save-logs:
+
+    # The package type for GX.games export. Must be `OperaGXPackage_Zip`, `OperaGXPackage_Gamestrip`, or `OperaGXPackage_Wallpaper`
+    # Optional. Default is `OperaGXPackage_Zip`.
+    gx-package-type:
 ```
 
 ### Outputs
