@@ -10,7 +10,7 @@ on:
       runner:
         description: "Runner"
         required: false
-        default: "ubuntu-latest"
+        default: "windows-latest"
       platform:
         description: "Platform"
         required: false
@@ -60,7 +60,7 @@ jobs:
       - name: Create the settings file
         if: inputs.platform == 'operagx'
         run: |
-          echo '{"machine.Platform Settings.operagx.sdk_dir": "${{github.workspace}}/emsdk-cache"}' > local_settings.json
+          echo '{"machine.Platform Settings.operagx.sdk_dir": "${{github.workspace}}\emsdk-cache"}' > local_settings.json
         shell: bash
       - name: Checkout a demo project
         uses: actions/checkout@v4
