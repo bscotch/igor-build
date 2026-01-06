@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/bscotch/igor-build/compare/v1.1.0...v1.2.0) (2026-01-06)
+
+
+### Features
+
+* Added support for GX.games export. ([6f92f77](https://github.com/bscotch/igor-build/commit/6f92f77b8a9005d028a9415bd34f7dbb4ed91b16))
+
+
+### Bug Fixes
+
+* Using full path for /tf option for igor to be compatible for GX.games export. ([6f92f77](https://github.com/bscotch/igor-build/commit/6f92f77b8a9005d028a9415bd34f7dbb4ed91b16))
+
 ## [1.1.0](https://github.com/bscotch/igor-build/compare/v1.0.4...v1.1.0) (2025-11-24)
 
 
