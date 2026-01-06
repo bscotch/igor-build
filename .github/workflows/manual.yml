@@ -50,11 +50,17 @@ jobs:
           --sdk_root=$ANDROID_SDK_ROOT \
           "platform-tools"
       - name: Setup emsdk
-        if: runner.os == 'Linux'
+        if: inputs.platform == 'operagx'
         uses: mymindstorm/setup-emsdk@v14
+        id: emsdk
         with:
           # Make sure to set a version number!
           version: 3.1.47
+          actions-cache-folder: "emsdk-cache"
+      - name: Create the settings file
+        if: inputs.platform == 'operagx'
+        run: |
+          echo '{"machine.Platform Settings.operagx.sdk_dir": "${{github.workspace}}/emsdk-cache"}' > local_settings.json
       - name: Checkout a demo project
         uses: actions/checkout@v4
         with:
