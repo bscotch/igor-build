@@ -59,7 +59,7 @@ jobs:
       - name: Create the settings file
         if: inputs.platform == 'operagx'
         run: |
-          echo '{"machine.Platform Settings.operagx.sdk_dir": "$EMSDK"}' > local_settings.json
+          echo '{"machine.Platform Settings.operagx.sdk_dir": "${{ env.EMSDK }}"}' > local_settings.json
       - name: Checkout a demo project
         uses: actions/checkout@v4
         with:
