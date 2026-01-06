@@ -13,6 +13,7 @@ export async function run() {
     const yyc = core.getInput("yyc") === "true";
     const save_logs = core.getInput("save-logs") !== "false";
     const name = core.getInput("name");
+    const gxPackageType = core.getInput("gx-package-type");
 
     if (!platform) {
       platform = "windows";
@@ -30,6 +31,7 @@ export async function run() {
       yyc,
       config,
       name,
+      gxPackageType: gxPackageType,
     };
 
     const compiler = new Gms2Compile(options);
@@ -37,7 +39,7 @@ export async function run() {
 
     if (save_logs) {
       const logFile = path.resolve(
-        `${compiler.name}_${platform}_${config}_build.log`,
+        `${compiler.name}_${platform}_${config}_build.log`
       );
       fs.removeSync(logFile);
       const writeStream = fs.createWriteStream(logFile);

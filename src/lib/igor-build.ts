@@ -16,7 +16,8 @@ interface IgorCommands {
     | "iOS"
     | "XboxOne"
     | "WinUWP"
-    | "XboxSeriesXS";
+    | "XboxSeriesXS"
+    | "OperaGX";
   command:
     | "PackageZip"
     | "Package"
@@ -66,6 +67,11 @@ export interface Gms2CompileOptions {
    *
    */
   yyc?: boolean;
+  gxPackageType?:
+    | "OperaGXPackage_Zip"
+    | "OperaGXPackage_Gamestrip"
+    | "OperaGXPackage_Wallpaper"
+    | string;
 }
 
 export class Gms2Compile {
@@ -80,6 +86,11 @@ export class Gms2Compile {
   name: string;
   private yyc = true;
   private runtimePath: string;
+  private gxPackageType?:
+    | "OperaGXPackage_Zip"
+    | "OperaGXPackage_Gamestrip"
+    | "OperaGXPackage_Wallpaper"
+    | string;
 
   constructor(options: Gms2CompileOptions) {
     this.userDir = options.userDir;
@@ -102,6 +113,7 @@ export class Gms2Compile {
       `${this.baseName}.${Gms2Compile.inferOutputExtension(this.exportPlatform)}`;
 
     this.yyc = options.yyc;
+    this.gxPackageType = options.gxPackageType || "OperaGXPackage_Zip";
 
     this.localSettings = fs.readJSONSync(
       join(this.userDir, "local_settings.json")
@@ -142,6 +154,9 @@ export class Gms2Compile {
       case "xboxseriesxs":
         worker = "XboxSeriesXS";
         break;
+      case "operagx":
+        worker = "OperaGX";
+        break;
       default:
         throw new Error(`${platform} is not supported!`);
     }
@@ -162,6 +177,7 @@ export class Gms2Compile {
         html5: "html",
         main: ".zip",
         xboxseriesxs: "xboxseriesxs-pkg",
+        operagx: "zip",
       }[platform] || ""
     );
   }
@@ -268,7 +284,7 @@ export class Gms2Compile {
       `/cache=${buildCache}`,
       `/temp=${buildTempDir}`,
       `/of=${join(buildTempDir, this.baseName + ".win")}`,
-      `/tf=${this.name}`,
+      `/tf=${join(this.destinationDir, this.name)}`,
       `/config=${this.config}`,
       `/runtime=${buildOptimization}`,
       "/v",
@@ -302,6 +318,10 @@ export class Gms2Compile {
         "xcuserdata"
       );
       fs.ensureDirSync(xcUserDir);
+    }
+
+    if (this.exportPlatform == "operagx") {
+      args.push(`/packagetype=${this.gxPackageType}`);
     }
 
     args.push("--", igorCommand.worker, igorCommand.command);
