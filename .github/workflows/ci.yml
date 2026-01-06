@@ -48,6 +48,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           echo '{"machine.Platform Settings.Android.Keystore.filename": "${{ github.workspace }}/ascx.keystore", "machine.Platform Settings.Android.Keystore.keystore_password": "${{ secrets.KEYSTORE_PASSWORD }}", "machine.Platform Settings.Android.Keystore.keystore_alias_password": "${{ secrets.KEYSTORE_PASSWORD }}", "machine.Platform Settings.Android.Keystore.alias": "${{ secrets.KEYSTORE_USERNAME }}" , "machine.Platform Settings.Android.Paths.jdk_location": "${{ env.JAVA_HOME_17_X64 }}", "machine.Platform Settings.operagx.sdk_dir": "${{ env.EMSDK }}" }' > local_settings.json
+          echo "IGOR_MODULES=android,operagx" >> $GITHUB_ENV
       - name: Set Up Android tools (Linux only)
         if: runner.os == 'Linux'
         run: |
@@ -72,6 +73,7 @@ jobs:
           access-key: ${{ secrets.ACCESS_KEY }}
           target-yyp: ${{ github.workspace }}/Ganary/Ganary/Ganary.yyp
           local-settings-override-file: ${{ github.workspace }}/local_settings.json
+          modules: ${{ env.IGOR_MODULES }}
         id: igor
       - name: Read settings-dir and echo the json content
         run: |
