@@ -6,7 +6,7 @@ on:
       runtime:
         description: "Target runtime"
         required: false
-        default: "2024.1400.2.925"
+        default: "2024.1400.3.933"
       runner:
         description: "Runner"
         required: false
@@ -14,7 +14,7 @@ on:
       platform:
         description: "Platform"
         required: false
-        default: "mac"
+        default: "operagx"
 permissions:
   contents: write
 
@@ -49,6 +49,12 @@ jobs:
           ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager \
           --sdk_root=$ANDROID_SDK_ROOT \
           "platform-tools"
+      - name: Setup emsdk
+        if: runner.os == 'Linux'
+        uses: mymindstorm/setup-emsdk@v14
+        with:
+          # Make sure to set a version number!
+          version: 3.1.47
       - name: Checkout a demo project
         uses: actions/checkout@v4
         with:
