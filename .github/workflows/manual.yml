@@ -10,7 +10,7 @@ on:
       runner:
         description: "Runner"
         required: false
-        default: "windows-latest"
+        default: "ubuntu-latest"
       platform:
         description: "Platform"
         required: false
@@ -56,15 +56,10 @@ jobs:
         with:
           # Make sure to set a version number!
           version: 3.1.47
-          actions-cache-folder: "emsdk-cache"
-      - name: Create JSON file
+      - name: Create the settings file
         if: inputs.platform == 'operagx'
-        shell: pwsh
         run: |
-          $data = @{
-            "machine.Platform Settings.operagx.sdk_dir" = "${{ github.workspace }}\emsdk-cache"
-          }
-          $data | ConvertTo-Json | Set-Content -Path local_settings.json
+          echo '{"machine.Platform Settings.operagx.sdk_dir": "$EMSDK"}' > local_settings.json
       - name: Checkout a demo project
         uses: actions/checkout@v4
         with:
