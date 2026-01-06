@@ -100,7 +100,7 @@ export class Gms2Compile {
     }
     this.baseName = basename(this.projectDir, extname(this.projectDir)).replace(
       " ",
-      "_"
+      "_",
     );
     this.exportPlatform = options.exportPlatform;
     this.destinationDir = options.destinationDir || resolve("out");
@@ -116,7 +116,7 @@ export class Gms2Compile {
     this.gxPackageType = options.gxPackageType || "OperaGXPackage_Zip";
 
     this.localSettings = fs.readJSONSync(
-      join(this.userDir, "local_settings.json")
+      join(this.userDir, "local_settings.json"),
     );
 
     this.targetRuntime = this.localSettings["targetRuntime"];
@@ -124,7 +124,7 @@ export class Gms2Compile {
     this.runtimePath = //Infer the runtime path
       join(
         this.localSettings["runtimeDir"] as string,
-        `runtime-${this.targetRuntime}`
+        `runtime-${this.targetRuntime}`,
       );
   }
 
@@ -210,7 +210,7 @@ export class Gms2Compile {
 
   private _generateWorkerCommands(
     platform: ModuleAliases,
-    generatePublishBuild = false
+    generatePublishBuild = false,
   ) {
     const worker = this._convertToIgorWorker(platform);
 
@@ -261,7 +261,7 @@ export class Gms2Compile {
         baseCommand = join(
           this.runtimePath,
           `bin/igor/windows/${arch}`,
-          "Igor.exe"
+          "Igor.exe",
         );
       } else if (osPlatform() == "darwin") {
         baseCommand = join(this.runtimePath, `bin/igor/osx/${arch}`, "Igor");
@@ -289,12 +289,12 @@ export class Gms2Compile {
       `/runtime=${buildOptimization}`,
       "/v",
       "/ic",
-      "/cr"
+      "/cr",
     );
 
     if (fs.existsSync(legacyIgor)) {
       args.push(
-        `/ssdk=${this.localSettings["machine.Platform Settings.Steam.steamsdk_path"]}`
+        `/ssdk=${this.localSettings["machine.Platform Settings.Steam.steamsdk_path"]}`,
       );
     }
     const igorCommand = this._generateWorkerCommands(this.exportPlatform);
@@ -315,7 +315,7 @@ export class Gms2Compile {
         baseName,
         baseName,
         `${baseName}.xcodeproj`,
-        "xcuserdata"
+        "xcuserdata",
       );
       fs.ensureDirSync(xcUserDir);
     }

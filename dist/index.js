@@ -35410,6 +35410,7 @@ class Gms2Compile {
             options.name ||
                 `${this.baseName}.${Gms2Compile.inferOutputExtension(this.exportPlatform)}`;
         this.yyc = options.yyc;
+        this.gxPackageType = options.gxPackageType || "OperaGXPackage_Zip";
         this.localSettings = lib_default().readJSONSync((0,external_path_.join)(this.userDir, "local_settings.json"));
         this.targetRuntime = this.localSettings["targetRuntime"];
         this.runtimePath = //Infer the runtime path
@@ -35441,6 +35442,9 @@ class Gms2Compile {
             case "xboxseriesxs":
                 worker = "XboxSeriesXS";
                 break;
+            case "operagx":
+                worker = "OperaGX";
+                break;
             default:
                 throw new Error(`${platform} is not supported!`);
         }
@@ -35459,6 +35463,7 @@ class Gms2Compile {
             html5: "html",
             main: ".zip",
             xboxseriesxs: "xboxseriesxs-pkg",
+            operagx: "zip",
         }[platform] || "");
     }
     iOSXCodeOutputDir() {
@@ -35539,7 +35544,7 @@ class Gms2Compile {
             throw `Could not find Igor at ${baseCommand}`;
         }
         const buildOptimization = this.yyc ? "YYC" : "VM";
-        args.push(`/uf=${this.userDir}`, `/rp=${this.runtimePath}`, `/project=${this.projectDir}`, `/cache=${buildCache}`, `/temp=${buildTempDir}`, `/of=${(0,external_path_.join)(buildTempDir, this.baseName + ".win")}`, `/tf=${this.name}`, `/config=${this.config}`, `/runtime=${buildOptimization}`, "/v", "/ic", "/cr");
+        args.push(`/uf=${this.userDir}`, `/rp=${this.runtimePath}`, `/project=${this.projectDir}`, `/cache=${buildCache}`, `/temp=${buildTempDir}`, `/of=${(0,external_path_.join)(buildTempDir, this.baseName + ".win")}`, `/tf=${(0,external_path_.join)(this.destinationDir, this.name)}`, `/config=${this.config}`, `/runtime=${buildOptimization}`, "/v", "/ic", "/cr");
         if (lib_default().existsSync(legacyIgor)) {
             args.push(`/ssdk=${this.localSettings["machine.Platform Settings.Steam.steamsdk_path"]}`);
         }
@@ -35554,6 +35559,9 @@ class Gms2Compile {
             const baseName = this.baseName.replace(/[-\s]/g, "_");
             const xcUserDir = (0,external_path_.join)((0,external_os_.homedir)(), "gamemakerstudio2", "GM_MAC", baseName, baseName, `${baseName}.xcodeproj`, "xcuserdata");
             lib_default().ensureDirSync(xcUserDir);
+        }
+        if (this.exportPlatform == "operagx") {
+            args.push(`/packagetype=${this.gxPackageType}`);
         }
         args.push("--", igorCommand.worker, igorCommand.command);
         if ((0,external_os_.platform)() == "darwin") {
@@ -35631,6 +35639,7 @@ async function run() {
         const yyc = core.getInput("yyc") === "true";
         const save_logs = core.getInput("save-logs") !== "false";
         const name = core.getInput("name");
+        const gxPackageType = core.getInput("gx-package-type");
         if (!platform) {
             platform = "windows";
             if (external_os_default().type() == "Darwin") {
@@ -35647,6 +35656,7 @@ async function run() {
             yyc,
             config,
             name,
+            gxPackageType: gxPackageType,
         };
         const compiler = new Gms2Compile(options);
         const child = await compiler.build();
