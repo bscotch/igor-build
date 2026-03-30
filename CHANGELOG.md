@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.3.0](https://github.com/bscotch/igor-build/compare/v1.2.0...v1.3.0) (2026-03-30)
+
+
+### Features
+
+* Add output for the Windows YYC symbols directory. ([3a8a103](https://github.com/bscotch/igor-build/commit/3a8a103e7f802fad692ac3fd843d26a6be106392))
+* normalize baseName to alphanumeric with underscores ([cbe8010](https://github.com/bscotch/igor-build/commit/cbe80103db5467293aa85e5d62eb193969627c91))
+
+
+### Bug Fixes
+
+* yyp project with blank space in path fails to build. ([3659898](https://github.com/bscotch/igor-build/commit/3659898bb5cccccdb7f7f881e03873e53db609fb))
+
 ## [1.2.0](https://github.com/bscotch/igor-build/compare/v1.1.0...v1.2.0) (2026-01-06)
 
 
