@@ -35549,7 +35549,12 @@ class Gms2Compile {
             throw `Could not find Igor at ${baseCommand}`;
         }
         const buildOptimization = this.yyc ? "YYC" : "VM";
-        args.push(`/uf=${this.userDir}`, `/rp=${this.runtimePath}`, `/project="${this.projectDir}"`, `/cache=${buildCache}`, `/temp=${buildTempDir}`, `/of=${(0,external_path_.join)(buildTempDir, this.baseName + ".win")}`, `/tf=${(0,external_path_.join)(this.destinationDir, this.name)}`, `/config=${this.config}`, `/runtime=${buildOptimization}`, "/v", "/ic", "/cr");
+        args.push(`/uf=${this.userDir}`, `/rp=${this.runtimePath}`, `/cache=${buildCache}`, `/temp=${buildTempDir}`, `/of=${(0,external_path_.join)(buildTempDir, this.baseName + ".win")}`, `/tf=${(0,external_path_.join)(this.destinationDir, this.name)}`, `/config=${this.config}`, `/runtime=${buildOptimization}`, "/v", "/ic", "/cr");
+        let projectDir = `${this.projectDir}`;
+        if ((0,external_os_.platform)() === "win32") {
+            projectDir = `"${this.projectDir}"`;
+        }
+        args.push(`/project=${projectDir}`);
         if (lib_default().existsSync(legacyIgor)) {
             args.push(`/ssdk=${this.localSettings["machine.Platform Settings.Steam.steamsdk_path"]}`);
         }

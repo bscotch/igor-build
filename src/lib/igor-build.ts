@@ -289,7 +289,6 @@ export class Gms2Compile {
     args.push(
       `/uf=${this.userDir}`,
       `/rp=${this.runtimePath}`,
-      `/project="${this.projectDir}"`,
       `/cache=${buildCache}`,
       `/temp=${buildTempDir}`,
       `/of=${join(buildTempDir, this.baseName + ".win")}`,
@@ -301,6 +300,11 @@ export class Gms2Compile {
       "/cr",
     );
 
+    let projectDir = `${this.projectDir}`;
+    if (platform() === "win32") {
+      projectDir = `"${this.projectDir}"`;
+    }
+    args.push(`/project=${projectDir}`);
     if (fs.existsSync(legacyIgor)) {
       args.push(
         `/ssdk=${this.localSettings["machine.Platform Settings.Steam.steamsdk_path"]}`,
