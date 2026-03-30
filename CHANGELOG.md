@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/bscotch/igor-build/compare/v1.3.0...v1.3.1) (2026-03-30)
+
+
+### Bug Fixes
+
+* Only wrap the project dir in quotes on Windows so it doesn't break on other platforms ([aae4ffa](https://github.com/bscotch/igor-build/commit/aae4ffa9035be00cdea26a47c445b348c6f77379))
+
 ## [1.3.0](https://github.com/bscotch/igor-build/compare/v1.2.0...v1.3.0) (2026-03-30)
 
 
