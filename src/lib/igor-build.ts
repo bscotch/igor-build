@@ -289,7 +289,7 @@ export class Gms2Compile {
     args.push(
       `/uf=${this.userDir}`,
       `/rp=${this.runtimePath}`,
-      `/project=${this.projectDir}`,
+      `/project="${this.projectDir}"`,
       `/cache=${buildCache}`,
       `/temp=${buildTempDir}`,
       `/of=${join(buildTempDir, this.baseName + ".win")}`,
