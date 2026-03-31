@@ -35485,7 +35485,15 @@ class Gms2Compile {
     }
     windowsYYCSymbolDir() {
         const buildCacheDir = this.localSettings["machine.General Settings.Paths.IDE.AssetCacheFolder"];
-        return (0,external_path_.join)(buildCacheDir, this.config, "Scripts/llvm-win/Sln/x64/Release");
+        const files = lib_default().readdirSync(buildCacheDir, {
+            withFileTypes: true,
+            recursive: true,
+        });
+        for (const file of files) {
+            if (file.name == `${this.baseName}.pdb` && file.isFile()) {
+                return (0,external_path_.join)(file.parentPath);
+            }
+        }
     }
     /**Default to the yyp file base name, but should really be looked up from the "option_windows_executable_name" key in options_windows */
     windowsExecutableBaseName() {
