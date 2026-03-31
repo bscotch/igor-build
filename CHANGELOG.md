@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.2](https://github.com/bscotch/igor-build/compare/v1.3.1...v1.3.2) (2026-03-31)
+
+
+### Bug Fixes
+
+* The Windows YYC symbol path is now inferred based on a search result rather than a hardcoded path. ([e2f3ce5](https://github.com/bscotch/igor-build/commit/e2f3ce5ece5d325290be4c933b5a1128ac9d3cf5))
+
 ## [1.3.1](https://github.com/bscotch/igor-build/compare/v1.3.0...v1.3.1) (2026-03-30)
 
 
