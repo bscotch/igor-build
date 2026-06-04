@@ -6,7 +6,7 @@ on:
       runtime:
         description: "Target runtime"
         required: false
-        default: "2024.1400.3.948"
+        default: "2024.1400.5.1033"
       runner:
         description: "Runner"
         required: false
@@ -14,11 +14,11 @@ on:
       platform:
         description: "Platform"
         required: false
-        default: "operagx"
+        default: "android"
       yyc:
         description: "y"
         required: false
-        default: "true"
+        default: "false"
 permissions:
   contents: write
 
@@ -78,6 +78,7 @@ jobs:
           local-settings-override-file: ${{ github.workspace }}/local_settings.json
           modules: ${{ inputs.platform }}
           runtime-version: ${{ inputs.runtime }}
+          cache: true
         id: igor
       - name: Read settings-dir and echo the json content
         run: |
